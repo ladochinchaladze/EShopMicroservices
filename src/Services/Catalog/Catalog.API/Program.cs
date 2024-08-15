@@ -1,8 +1,13 @@
-using Carter;
+
+
+using Microsoft.AspNetCore.Builder;
 
 var builder = WebApplication.CreateBuilder(args);
 
 //Add Services to the container.
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
 builder.Services.AddCarter();
 builder.Services.AddMediatR(config =>
 {
@@ -15,6 +20,8 @@ builder.Services.AddMarten(opts =>
 }).UseLightweightSessions();
 
 var app = builder.Build();
+app.UseSwagger();
+app.UseSwaggerUI();
 
 //Configure the Http Request pipeline.
 app.MapCarter();
